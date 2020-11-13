@@ -1,0 +1,14 @@
+<style>body {background-image: url("https://cdn.glitch.com/e81927d1-763b-4abd-9cc0-1ff0591ef6fc%2Fbackgr.png?v=1569336887886")}</style><body></body>
+<title>Log Out | Coiny</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="https://img.icons8.com/cute-clipart/64/000000/cursor.png" type="image/png">
+<script>
+  setTimeout(function() {
+    if(confirm("Are you sure you would like to log out?")) {
+      localStorage.setItem('account', null); 
+      window.location.href = 'https://coiny.ml/?logout=true';
+    } else {
+      window.location.href = 'https://coiny.ml/';
+    }
+  }, 100)
+</script>

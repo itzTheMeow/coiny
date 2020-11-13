@@ -1,0 +1,135 @@
+<title>Log In | Coiny</title>
+
+<!--Begin Navbar-->
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>document.onreadystatechange = function() {var state = document.readyState; if (state == 'complete') {AOS.init();}}</script>
+<link rel="icon" href="https://img.icons8.com/cute-clipart/64/000000/cursor.png" type="image/png">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<body id="background"></body>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="nav">
+  <a class="navbar-brand" href="/" id="username">Logged Out</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="/">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="./../createaccount/">Create an Account</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="./../login/">Log In</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="./../logout/" id="logoutButton">Log Out</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="./../about/">About</a>
+      </li>
+    </ul>
+    <img alt="Error" id="modeButton" style="cursor: hand;">
+  </div>
+</nav>
+<!--End Navbar-->
+
+<title>Login</title>
+<br>
+<div style="text-align: center;">
+  <div class="jumbotron bg-dark" id="jumbotron" style="width: 60%; text-align: center; display: inline-block; border-style: solid; border-width: 1px; border-color: #99AAB5;" data-aos="flip-left" data-aos-duration="1750">
+    <h1 class="display-3 text-light" id="headerJ">Log In</h1>
+    <p class="lead text-secondary">Welcome back! Please log in with your CASE SENSITIVE username and password.</p>
+    <hr class="my-4 bg-light" id="hrJ">
+    <p class="text-muted">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-default">Username</span>
+        </div>
+        <input type="text" class="form-control bg-transparent text-white" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="username2">
+      </div>
+      <div class="input-group flex-nowrap">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="addon-wrapping">Password&nbsp;</span>
+        </div>
+        <input type="password" class="form-control bg-transparent text-white" aria-label="Username" aria-describedby="addon-wrapping" id="password">
+      </div><br>
+      <div class="btn-group mr-2" role="group" aria-label="First group">
+        <button type="button" class="btn btn-primary" onclick="login()">Log In</button><span style="background-color: LightGrey;">&hairsp;</span>
+        <button type="button" class="btn btn-primary" onclick="redirect()">Cancel</button>
+      </div>
+    </p>
+  </div>
+</div>
+
+<script>
+function login() {
+  let user = document.getElementById('username2').value
+  let pass = document.getElementById('password').value
+  window.location.href = "https://coiny.ml/login" + '?username=' + user + "&password=" + pass
+}
+function redirect() {
+  window.location.href = "/"
+}
+document.addEventListener('keypress', function(e) {
+  if(e.key == 'Enter') login()
+});
+  
+  let sun = "https://img.icons8.com/color/38/000000/sun.png"
+  let moon = "https://img.icons8.com/plasticine/38/000000/crescent-moon.png"
+  let light = "https://cdn.glitch.com/e81927d1-763b-4abd-9cc0-1ff0591ef6fc%2Fbackgr_light.png"
+  let dark = "https://cdn.glitch.com/e81927d1-763b-4abd-9cc0-1ff0591ef6fc%2Fbackgr.png"
+  
+  let mode = localStorage.getItem('mode')
+  if(!mode) mode = 'dark'
+  let modeButton = document.getElementById('modeButton')
+  let click = "alert('error')"
+  let nav = document.getElementById('nav')
+  let jumbotron = document.getElementById('jumbotron')
+  let header = document.getElementById('headerJ')
+  let hr = document.getElementById('hrJ')
+  
+  if(mode == 'light') {
+    modeButton.src = moon
+    modeButton.alt = "Dark Mode"
+    click = "localStorage.setItem('mode', 'dark'); window.location.reload();"
+    
+    nav.className = nav.className.replace('navbar-dark', 'navbar-light')
+    nav.className = nav.className.replace('bg-dark', 'bg-light')
+    jumbotron.className = jumbotron.className.replace('bg-dark', 'bg-light')
+    header.className = header.className.replace('text-light', 'text-dark')
+    hrJ.className = hrJ.className.replace('bg-light', 'bg-dark')
+    document.getElementById('background').style = "background-image: url('"+light+"');"
+  }
+  if(mode == 'dark') {
+    modeButton.src = sun
+    modeButton.alt = "Light Mode"
+    click = "localStorage.setItem('mode', 'light'); window.location.reload();"
+    
+    nav.className = nav.className.replace('navbar-light', 'navbar-dark')
+    nav.className = nav.className.replace('bg-light', 'bg-dark')
+    jumbotron.className = jumbotron.className.replace('bg-light', 'bg-dark')
+    header.className = header.className.replace('text-dark', 'text-light')
+    hrJ.className = hrJ.className.replace('bg-dark', 'bg-light')
+    document.getElementById('background').style = "background-image: url('"+dark+"');"
+  }
+  
+  modeButton.addEventListener("click", function() {
+    eval(click)
+  }, false);
+</script>
+
+<script>
+  let account = JSON.parse(localStorage.getItem('account'))
+  if(!account) document.getElementById('logoutButton').style.display = 'none'
+  if(account) {
+    document.getElementById('username').innerHTML = account.username
+    document.getElementById('username').href = "./../play/"
+  }
+</script>
