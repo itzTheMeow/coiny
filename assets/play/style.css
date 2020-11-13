@@ -1,0 +1,10 @@
+html {
+  overflow-x: hidden;
+}
+g {
+  color: White;
+}
+tooltip {
+  position: absolute;
+  display: none;
+}

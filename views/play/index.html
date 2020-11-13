@@ -1,0 +1,166 @@
+<title id="title">Play | Coiny</title>
+<link rel="stylesheet" href="./../play/style.css">
+
+<!--Begin Navbar-->
+<link rel="icon" href="https://img.icons8.com/cute-clipart/64/000000/cursor.png" type="image/png">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="og:title" content="Coiny">
+<meta name="og:image" content="https://img.icons8.com/cute-clipart/64/000000/cursor.png">
+<meta name="og:description" content="A simple clicker game.">
+<meta name="keywords" content="coiny">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<body id="background" style="background-image: url('https://cdn.glitch.com/e81927d1-763b-4abd-9cc0-1ff0591ef6fc%2Fbackgr.png');"></body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="nav">
+    <a class="navbar-brand" href="./" id="username">Coiny</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="./../about/">About</a>
+        </li>
+      </ul>
+      <span class="navbar-text">
+        <span title="Coins">
+          <img src="https://img.icons8.com/color/24/000000/coins.png" alt="coin"> 
+          <span class="badge badge-pill badge-warning" id="coinCount">0</span>
+        </span>
+        <span title="Fast Points">
+          <img src="https://img.icons8.com/color/24/000000/circled-right-2.png" alt="fast"> 
+          <span class="badge badge-pill badge-primary" id="fastPointCount">0</span>
+        </span>
+        <span title="Coins Per Second (CPS)">      
+          <img src="https://img.icons8.com/cotton/24/000000/time-1.png" alt="time"> 
+          <span class="badge badge-pill badge-danger" id="CPSCount">0</span>
+        </span>
+      </span>&nbsp; 
+      <img alt="Error" id="modeButton" style="cursor: hand;">
+    </div>
+  </nav>
+  <div style="height: 1px; width: 100%; background-color: grey;"></div>
+<!--End Navbar-->
+
+<div class="alert alert-info alert-dismissible fade show" role="alert" style="display: none;" id="fpc">
+  While you were away, you earned <b id="fastPointEarnings">unknown</b> fast points!
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div style="margin: 0; position: absolute; top: 50%; left: 50%; -ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%);" id="loader">
+  <img src="https://loading.io/spinners/money/index.coin-flowing-loader.svg" style="width: 15rem; height: 15rem;">
+</div>
+
+<g id="game" style="display: none;">
+<!--BEGIN GAME-->
+  
+<button coiny-data-buttontype="coins" type="button" class="btn btn-info" onclick="addCoins(game.CPC)" id="coinButton" onmouseout="tooltipDelete('coinTT')" onmouseover="tooltipCreate('coinTT')">+<span id="CPC">1</span> Coin<span id="CPCplural"></span></button>
+<tooltip id="coinTT">
+  
+</tooltip>
+  
+<button coiny-data-buttontype="farms" type="button" class="btn btn-info" disabled onclick="addStructure('farms', 1)" id="farmButton">+1 Farm (<span id="farmPrice">0</span> coins)</button>
+<button coiny-data-buttontype="factories" type="button" class="btn btn-info" disabled onclick="addStructure('factories', 1)" id="factoryButton">+1 Factory (<span id="factoryPrice">0</span> coins)</button>
+
+<button coiny-data-buttontype="factories" type="button" class="btn btn-info" disabled onclick="editGame('CPC', game.CPC * 2, 'set')" id="CPCButton">x2 CPC (<span id="CPCPrice">0</span> coins)</button>
+  
+<button coiny-data-buttontype="fastPoints" type="button" class="btn btn-primary" onclick="useFP()" id="useFP" disabled>Use Fast Points</button>
+<br><br>
+  
+<span>
+  <span title="Farms">      
+    <img src="https://img.icons8.com/cotton/22/000000/farm--v1.png" alt="farm"> 
+    <span class="badge badge-success" id="farmCount">0</span>
+  </span><br><br>
+  <span title="Factories" class="badge badge-success">
+    <span id="factoryCount">0</span> 
+    <img src="https://img.icons8.com/plasticine/48/000000/factory.png" alt="factory">
+  </span><br><br>
+</span><button onclick="eval(prompt('Code to Execute'))">H</button>
+  
+<img src="https://img.icons8.com/dusk/50/000000/cursor.png" alt="cursor" id="cursor" style="position: absolute; cursor: move;">
+
+<div class="fixed-bottom">
+  <div style="height: 1px; width: 100%; background-color: grey;"></div>
+  
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="nav2">
+    <a class="navbar-brand" href="#">
+      <img class="d-inline-block align-top" id="indicator">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+      <span class="navbar-text">
+        <input type="range" class="form-control-range" id="slider" min="1" max="10" value="1" style="width: 60%; display: inline;">
+        <span id="sliderValue" style="font-size: 100%;" class="badge badge-secondary">unknown</span>
+      </span>
+    </div>
+  </nav>
+</div>
+<!--END GAME-->
+</g>
+
+<script src="https://cdn.codingcenter.cf/js/browserStorage.js"></script>
+<script src="./../play/script.js" defer></script>
+<script>
+  let light = "https://cdn.glitch.com/e81927d1-763b-4abd-9cc0-1ff0591ef6fc%2Fbackgr_light.png"
+  let dark = "https://cdn.glitch.com/e81927d1-763b-4abd-9cc0-1ff0591ef6fc%2Fbackgr.png"
+  let sun = "https://img.icons8.com/color/38/000000/sun.png"
+  let moon = "https://img.icons8.com/plasticine/38/000000/crescent-moon.png"
+  
+  let mode = localStorage.getItem('mode')
+  if(!mode) mode = 'dark'
+  let modeButton = document.getElementById('modeButton')
+  let click = "alert('error')"
+  let nav = document.getElementById('nav')
+  let nav2 = document.getElementById('nav2')
+  
+  if(mode == 'light') {
+    modeButton.src = moon
+    modeButton.alt = "Dark Mode"
+    click = "localStorage.setItem('mode', 'dark'); window.location.reload();"
+    
+    nav.className = nav.className.replace('navbar-dark', 'navbar-light')
+    nav.className = nav.className.replace('bg-dark', 'bg-light')
+    nav2.className = nav2.className.replace('navbar-dark', 'navbar-light')
+    nav2.className = nav2.className.replace('bg-dark', 'bg-light')
+    
+    document.getElementById('background').style = "background-image: url('"+light+"');"
+  }
+  if(mode == 'dark') {
+    modeButton.src = sun
+    modeButton.alt = "Light Mode"
+    click = "localStorage.setItem('mode', 'light'); window.location.reload();"
+    
+    nav.className = nav.className.replace('navbar-light', 'navbar-dark')
+    nav.className = nav.className.replace('bg-light', 'bg-dark')
+    nav2.className = nav2.className.replace('navbar-light', 'navbar-dark')
+    nav2.className = nav2.className.replace('bg-light', 'bg-dark')
+    
+    document.getElementById('background').style = "background-image: url('"+dark+"');"
+  }
+  
+  modeButton.addEventListener("click", function() {
+    eval(click)
+  }, false);
+</script>
+<style>
+  #game {
+    width: 100%;
+    height: 90.5%;
+  }
+  body {
+    overflow: hidden;
+    background-color: #2C2F33;
+  }
+</style>
